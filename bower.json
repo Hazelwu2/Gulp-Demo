@@ -1,0 +1,20 @@
+{
+  "name": "gulp-demo",
+  "description": "This is Gulp Demo for using initialization PROJECT.",
+  "main": "gulpfile.js",
+  "authors": [
+    "HazelWu"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Hazelwu2/Gulp-Demo",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1"
+  }
+}

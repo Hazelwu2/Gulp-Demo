@@ -6,7 +6,6 @@ var gulp          = require('gulp'),
     sass          = require('gulp-sass'),
     concat        = require('gulp-concat'),
     watch         = require('gulp-watch'),
-    livereload    = require('gulp-livereload'),
     cleanCSS      = require('gulp-clean-css'),
     browserSync   = require('browser-sync').create(),
     plumber       = require('gulp-plumber'),
@@ -107,10 +106,6 @@ gulp.task('watch', function(){
   gulp.watch('src/sass/**/*.scss', ['sass']);
   gulp.watch('src/**/*.html', ['copyHtml']);
   gulp.watch('src/css/**/*.css', ['css']);
-
-  // 建立即時重整伺服器
-  livereload.listen();
-  gulp.watch(['public/**']).on('change', livereload.changed);
 
   return console.log('任務「 Watch 」，目前正在監視中。');
 });
