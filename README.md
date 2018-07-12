@@ -8,7 +8,8 @@ This is a Gulp-Demo for building initialization website. include package for js,
 3. Sass/Scss 轉換成 CSS
 4. Minify css
 5. 打包所有 js 成 main.js
-6. Watch 自動監視，一改變不用Refresh頁面
+6. 即時重整，Watch 自動監視，一改變不用Refresh頁面
+7. Autoprefixer ，自動加入前綴詞，last 3 version瀏覽器版本
 
 ## 安裝步驟
 1. 將專案 Clone 下來
