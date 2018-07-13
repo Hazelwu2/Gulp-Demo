@@ -1,12 +1,12 @@
 // dependencies
 var gulp = require('gulp'),
+  jade = require('gulp-jade'),
   browserSync = require('browser-sync').create(),
   pngquant = require('imagemin-pngquant'), //深度壓縮png
   autoprefixer = require('autoprefixer'),
   mainBowerFiles = require('main-bower-files'),
-  jade = require('gulp-jade'),
+  sourcemaps = require('gulp-sourcemaps'),
   $ = require('gulp-load-plugins')();
-
 
 // Logs Message
 gulp.task('message', function () {
@@ -27,7 +27,7 @@ gulp.task('jade', function () {
     .pipe(jade({ pretty: true }))
     .pipe(gulp.dest('./public/'))
     .pipe(browserSync.stream());
-  return console.log('任務 「JadeTemplate」已完成')
+  return console.log('任務 「 JadeTemplate 」已完成')
 });
 // Optimize Images 優化圖片
 gulp.task('imageMin', function () {
@@ -58,7 +58,20 @@ gulp.task('sass', function () {
   return console.log('任務「 Compile Sass 」，轉換成CSS已完成。');
 });
 
-// Conpile css
+// Gulp Babel ES6 to ES5 sysnax
+gulp.task('babel', () =>
+  gulp.src('./src/js/**/*.js')
+    .pipe(sourcemaps.init())
+    .pipe($.babel({
+      presets: ['env']
+    }))
+    .pipe($.concat('all.js'))
+    // .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./public/js'))
+);
+
+
+// Compile css
 gulp.task('css', function () {
   gulp.src(['src/css/bootstrap.css', 'src/css/style.css', 'src/css/responsive.css'])
     .pipe($.plumber())
@@ -73,7 +86,7 @@ gulp.task('css', function () {
 gulp.task('scripts', function () {
   gulp.src(["src/js/**/*.js"])
     .pipe($.plumber())
-    .pipe($.concat('main.js'))
+    .pipe($.concat('all.js'))
     .pipe($.uglify())
     .pipe($.sourcemaps.write('maps'))
     .pipe(gulp.dest('./public/js'))
@@ -116,6 +129,7 @@ gulp.task('default', [
   'scripts',
   'vendorJs',
   'browserSync',
+  'babel',
   'watch'
 ]);
 
@@ -124,13 +138,11 @@ gulp.task('default', [
 // Watch task
 gulp.task('watch', function () {
 
-  gulp.watch('src/*.jade,', ['jade']);
   gulp.watch('src/js/**/*.js', ['scripts']);
   gulp.watch('src/images/**/*', ['imageMin']);
-  gulp.watch('src/sass/**/*.sass', ['sass']);
   gulp.watch('src/sass/**/*.scss', ['sass']);
-  gulp.watch('src/**/*.html', ['copyHtml']);
   gulp.watch('src/css/**/*.css', ['css']);
+  gulp.watch('src/*.jade,', ['jade']);
 
   return console.log('任務「 Watch 」，目前正在監視中。');
 });
